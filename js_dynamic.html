@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  #add {
+    background-color: green;
+    color: white;
+    border-radius: 15px;
+    border: 1px solid green;
+  }
+
+  #delet {
+    background-color: red;
+    color: white;
+    border-radius: 15px;
+    border: 1px solid red;
+
+  }
+
+  #inputBox {
+    padding: 2%;
+    border-radius: 15px;
+    border: 1px solid black;
+  }
+  /* #list{
+    padding: 0 3%;
+  } */
+
+  .mainContainer {
+    width: 100%;
+    height: 5vh;
+    justify-content: space-evenly;
+    display: flex;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<body>
+  <div>
+    <h1>Dynamic Web page</h1>
+    <div class="mainContainer">
+      <input id="inputBox" type="text">
+      <button id="add">추가</button>
+      <button id="delet">삭제</button>
+    </div>
+    
+      <ul id="list"></ul>
+
+  </div>
+</body>
+<script>
+
+  const input = document.getElementById("inputBox");
+  const add = document.getElementById("add");
+  const delet = document.getElementById("delet");
+  const list = document.getElementById("list");
+
+  function addItem() {
+    const item = input.value
+      .split(',')
+      .filter(s => s.length > 0);
+
+    if (item.length === 0){
+      if(!item.length){
+        alert("추가할 목록이 없습니다.");
+      }
+      return;
+    }
+
+    for (const text of item) {
+      const li = document.createElement('li');
+      li.textContent = text;
+      list.appendChild(li);
+    }
+    input.value="";
+  }
+
+  function deletItem() {
+        if(!list.lastElementChild){
+      alert("삭제할 목록이 없습니다.");
+      return;
+    }
+    if (list.lastElementChild) {
+      list.removeChild(list.lastElementChild);
+    }
+  }
+
+  add.addEventListener("click", addItem);
+  delet.addEventListener("click", deletItem);
+  
+</script>
+
+</html>
