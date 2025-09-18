@@ -28,7 +28,7 @@
         <a href="index.html" class="navbar-brand d-flex align-items-center">
           <strong>CRUD Album</strong>
         </a>
-        <a href="add.html" class="btn btn-primary my-2">Add the Album</a>
+        <a href="add.html" class="btn btn-primary my-2">추가하기</a>
       </div>
     </div>
   </header>
@@ -61,8 +61,10 @@
                 <p>by yammy</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" onclick="location.href='view.html'"
+                      class="btn btn-sm btn-outline-secondary">View</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button name="delet"  type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
                   </div>
                   <small class="text-body-secondary">9 mins</small>
                 </div>
@@ -80,8 +82,10 @@
                 <p>by SonyHeis</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" onclick="location.href='view.html'"
+                      class="btn btn-sm btn-outline-secondary">View</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button name="delet"  type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
                   </div>
                   <small class="text-body-secondary">15 mins</small>
                 </div>
@@ -98,8 +102,10 @@
                 <p>by play0h</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" onclick="location.href='view.html'"
+                      class="btn btn-sm btn-outline-secondary">View</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button name="delet" type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
                   </div>
                   <small class="text-body-secondary">30 mins</small>
                 </div>
@@ -120,5 +126,23 @@
     </div>
   </footer>
 </body>
+
+<script>
+  const deletBtns = document.getElementsByName("delet");
+
+  function deletCard (){
+    if (confirm("게시물을 삭제할까요?")) {
+      alert("게시물이 삭제 되었습니다.");
+      window.location.href = "index.html";
+    } else {
+      alert("취소 되었습니다.");
+    }
+  }
+
+  deletBtns.forEach(e=>{
+    e.addEventListener("click",deletCard);
+  })
+  
+</script>
 
 </html>
