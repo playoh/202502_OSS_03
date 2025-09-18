@@ -2,17 +2,26 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Create Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Page</title>
 
   <!-- ✅ Bootstrap 5.3 CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    .img-preview {
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: .5rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 
 <body>
-
   <!-- 상단 Navbar -->
   <header data-bs-theme="dark">
     <div class="navbar navbar-dark bg-dark shadow-sm">
@@ -28,49 +37,67 @@
   <main class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2 class="mb-4">새 글 작성</h2>
+        <h2 class="mb-4">작성글 수정</h2>
 
-        <form>
+        <!-- 📌 수정 폼 -->
+        <form id="editForm" novalidate>
+          <!-- 0. 게시물 ID (읽기전용/숨김 선택) -->
+          <input type="hidden" id="postId" />
+
+          <!-- 1. 작성자 이름 -->
           <div class="mb-3">
-            <label for="email" class="form-label">생성자 이름</label>
-            <input type="text" class="form-control" id="email" placeholder="작성자 이름을 입력하세요" required>
+            <label for="authorName" class="form-label">작성자 이름 <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="authorName" placeholder="작성자 이름을 입력하세요" required />
+            <div class="invalid-feedback">이름은 2자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 1. Email -->
+          <!-- 2. 작성자 Email -->
           <div class="mb-3">
-            <label for="email" class="form-label">생성자 Email</label>
-            <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+            <label for="authorEmail" class="form-label">작성자 Email <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="authorEmail" placeholder="example@email.com" required />
+            <div class="invalid-feedback">올바른 이메일 형식을 입력해주세요.</div>
           </div>
 
-          <!-- 2. 이미지 업로드 -->
+          <!-- 3. 현재 이미지 미리보기 (파일 input은 보안상 값 채우기 불가) -->
           <div class="mb-3">
-            <label for="image" class="form-label">글의 사진</label>
-            <input class="form-control" type="file" id="image" accept="image/*" required>
+            <label class="form-label">현재 등록된 이미지</label>
+            <img id="currentImage" class="img-preview d-none" alt="현재 이미지" />
           </div>
 
-          <!-- 3. 제목 -->
+          <!-- 4. 이미지 업로드 -->
           <div class="mb-3">
-            <label for="title" class="form-label">글의 제목</label>
-            <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" required>
+            <label for="image" class="form-label">이미지 변경</label>
+            <input class="form-control" type="file" id="image" accept="image/*" />
+            <div class="form-text">이미지를 변경하지 않으려면 비워두세요.</div>
+            <div class="invalid-feedback">이미지 파일만 업로드 해주세요.(jpg/png/webp 등)</div>
           </div>
 
-          <!-- 4. 내용 -->
+          <!-- 5. 제목 -->
           <div class="mb-3">
-            <label for="content" class="form-label">글의 내용</label>
-            <textarea class="form-control" id="content" rows="5" placeholder="내용을 입력하세요" style="resize: none;"
+            <label for="title" class="form-label">글의 제목 <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" required />
+            <div class="invalid-feedback">제목은 2자 이상 입력해주세요.</div>
+          </div>
+
+          <!-- 6. 내용 -->
+          <div class="mb-3">
+            <label for="content" class="form-label">글의 내용 <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="content" rows="5" placeholder="내용을 입력하세요" style="resize:none"
               required></textarea>
+            <div class="invalid-feedback">내용은 10자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 5. 날짜 -->
+          <!-- 7. 날짜 -->
           <div class="mb-3">
-            <label for="date" class="form-label">작성 날짜</label>
-            <input type="date" class="form-control" id="date" required>
+            <label for="date" class="form-label">작성 날짜 <span class="text-danger">*</span></label>
+            <input type="date" class="form-control" id="date" required />
+            <div class="invalid-feedback">미래 날짜는 선택할 수 없습니다.</div>
           </div>
 
           <!-- 버튼 -->
           <div class="d-flex justify-content-between">
             <a href="index.html" class="btn btn-secondary">취소</a>
-            <button id="submitBtn" type="button" class="btn btn-primary">수정하기</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary">수정하기</button>
           </div>
         </form>
       </div>
@@ -84,18 +111,136 @@
     </div>
   </footer>
 
-</body>
-<script>
-  const submitBtn = document.getElementById("submitBtn");
-  function submit() {
-    if (confirm("게시물을 추가 할까요?")) {
-      alert("게시물이 생성 되었습니다.");
-      window.location.href = "index.html";
-    } else {
-      alert("취소 되었습니다.");
+  <script>
+
+    const record = {
+      id: "42",
+      authorName: "play0h",
+      authorEmail: "hong@example.com",
+      imageUrl: "https://picsum.photos/800/400?random=42",
+      title: "부트스트랩 앨범 리팩터링",
+      content: "부트스트랩 템플릿을 활용하여 CRUD 앨범을 구현하고, edit 페이지에서 검증을 강화했습니다.",
+      date: "2025-09-10"
+    };
+
+    const form = document.getElementById("editForm");
+    const postId = document.getElementById("postId");
+    const authorName = document.getElementById("authorName");
+    const authorEmail = document.getElementById("authorEmail");
+    const currentImage = document.getElementById("currentImage");
+    const imageInput = document.getElementById("image");
+    const titleInput = document.getElementById("title");
+    const contentInput = document.getElementById("content");
+    const dateInput = document.getElementById("date");
+
+    function hydrateForm(rec) {
+      postId.value = rec.id;
+      authorName.value = rec.authorName || "";
+      authorEmail.value = rec.authorEmail || "";
+      titleInput.value = rec.title || "";
+      contentInput.value = rec.content || "";
+      dateInput.value = rec.date || "";
+
+      if (rec.imageUrl) {
+        currentImage.src = rec.imageUrl;
+        currentImage.classList.remove("d-none");
+      }
     }
-  }
-  submitBtn.addEventListener("click",submit);
-</script>
+
+    // ✅ Bootstrap 스타일과 함께 커스텀 유효성 검사
+    function setInvalid(input, message) {
+      input.classList.add("is-invalid");
+      const feedback = input.closest(".mb-3").querySelector(".invalid-feedback");
+      if (feedback) feedback.textContent = message;
+    }
+
+    function clearInvalid(input) {
+      input.classList.remove("is-invalid");
+    }
+
+    function isFutureDate(yyyyMMdd) {
+      if (!yyyyMMdd) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const d = new Date(yyyyMMdd);
+      return d > today;
+    }
+
+    function validate() {
+      let ok = true;
+
+      clearInvalid(authorName);
+      if (authorName.value.trim().length < 2) {
+        setInvalid(authorName, "이름은 2자 이상 입력해주세요.");
+        ok = false;
+      }
+
+      clearInvalid(authorEmail);
+      if (!authorEmail.checkValidity()) {
+        setInvalid(authorEmail, "올바른 이메일 형식을 입력해주세요.");
+        ok = false;
+      }
+
+      clearInvalid(titleInput);
+      if (titleInput.value.trim().length < 2) {
+        setInvalid(titleInput, "제목은 2자 이상 입력해주세요.");
+        ok = false;
+      }
+
+      clearInvalid(contentInput);
+      if (contentInput.value.trim().length < 10) {
+        setInvalid(contentInput, "내용은 10자 이상 입력해주세요.");
+        ok = false;
+      }
+
+      clearInvalid(dateInput);
+      if (!dateInput.value || isFutureDate(dateInput.value)) {
+        setInvalid(dateInput, "미래 날짜는 선택할 수 없습니다.");
+        ok = false;
+      }
+
+      clearInvalid(imageInput);
+      if (imageInput.files && imageInput.files[0]) {
+        const file = imageInput.files[0];
+        if (!file.type.startsWith("image/")) {
+          setInvalid(imageInput, "이미지 파일만 업로드 해주세요.(jpg/png/webp 등)");
+          ok = false;
+        }
+      }
+
+      if (!form.checkValidity()) ok = false;
+      return ok;
+    }
+
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      form.classList.add("was-validated");
+
+
+      if (confirm("게시물을 수정할까요?")) {
+        const payload = {
+          id: postId.value,
+          authorName: authorName.value.trim(),
+          authorEmail: authorEmail.value.trim(),
+          title: titleInput.value.trim(),
+          content: contentInput.value.trim(),
+          date: dateInput.value,
+        };
+
+        console.log("[DEBUG] 수정 payload", payload);
+        alert("게시물이 수정되었습니다.");
+        window.location.href = "index.html";
+      } else {
+        alert("수정이 취소되었습니다.");
+      }
+    });
+
+
+
+    hydrateForm(record);
+  </script>
+</body>
 
 </html>
