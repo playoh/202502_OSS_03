@@ -87,6 +87,15 @@
             <div class="invalid-feedback">내용은 10자 이상 입력해주세요.</div>
           </div>
 
+          <div class="mb-3">
+            <label for="siteLink" class="form-label">참고 사이트 링크</label>
+            <input type="url" class="form-control" id="siteLink" placeholder="https://example.com">
+            <div class="form-text">
+              예: https://... (입력 시 올바른 URL 형식이어야 합니다)
+            </div>
+            <div class="invalid-feedback">올바른 URL 형식을 입력해주세요. (http:// 또는 https://)</div>
+          </div>
+
           <!-- 7. 날짜 -->
           <div class="mb-3">
             <label for="date" class="form-label">작성 날짜 <span class="text-danger">*</span></label>
@@ -120,6 +129,7 @@
       imageUrl: "https://picsum.photos/800/400?random=42",
       title: "부트스트랩 앨범 리팩터링",
       content: "부트스트랩 템플릿을 활용하여 CRUD 앨범을 구현하고, edit 페이지에서 검증을 강화했습니다.",
+      siteLink: "https://conscious-robin-3fc.notion.site/JS_DOM_ass03-2699bf90260a800199e3c7620792332b",
       date: "2025-09-10"
     };
 
@@ -139,6 +149,7 @@
       authorEmail.value = rec.authorEmail || "";
       titleInput.value = rec.title || "";
       contentInput.value = rec.content || "";
+      siteLink.value = rec.siteLink || "";
       dateInput.value = rec.date || "";
 
       if (rec.imageUrl) {
@@ -192,6 +203,12 @@
         setInvalid(contentInput, "내용은 10자 이상 입력해주세요.");
         ok = false;
       }
+      clearInvalid(siteLink);
+      if (siteLink.value.trim() && !siteLink.checkValidity()) {
+        setInvalid(siteLink, "올바른 URL 형식을 입력해주세요. (http:// 또는 https://)");
+        ok = false;
+      }
+
 
       clearInvalid(dateInput);
       if (!dateInput.value || isFutureDate(dateInput.value)) {
