@@ -23,11 +23,12 @@
   const text = document.getElementById("text");
 
   function textChange(){
-    text.innerText = "버튼이 클릭되었습니다.";
+    text.innerHTML = "<h1>버튼이 클릭되었습니다.<h1>";
+    text.style.backgroundColor = "red";
   }
 
   btn1.addEventListener("click", textChange);
-
+  document.body.appendChild(dtn1);
 
 </script>
 
