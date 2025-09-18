@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,9 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
 <body>
-
   <!-- 상단 Navbar -->
   <header data-bs-theme="dark">
     <div class="navbar navbar-dark bg-dark shadow-sm">
@@ -30,47 +27,53 @@
       <div class="col-lg-8">
         <h2 class="mb-4">새 글 작성</h2>
 
-        <form>
+        <form id="createForm" novalidate>
+          <!-- 1. 작성자 이름 -->
           <div class="mb-3">
-            <label for="email" class="form-label">생성자 이름</label>
-            <input type="text" class="form-control" placeholder="작성자 이름을 입력하세요" required>
+            <label for="authorName" class="form-label">생성자 이름 <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="authorName" placeholder="작성자 이름을 입력하세요" required>
+            <div class="invalid-feedback">이름은 2자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 1. Email -->
+          <!-- 2. Email -->
           <div class="mb-3">
-            <label for="email" class="form-label">생성자 Email</label>
-            <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+            <label for="authorEmail" class="form-label">생성자 Email <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="authorEmail" placeholder="example@email.com" required>
+            <div class="invalid-feedback">올바른 이메일 형식을 입력해주세요.</div>
           </div>
 
-          <!-- 2. 이미지 업로드 -->
+          <!-- 3. 이미지 업로드 -->
           <div class="mb-3">
-            <label for="image" class="form-label">글의 사진</label>
+            <label for="image" class="form-label">글의 사진 <span class="text-danger">*</span></label>
             <input class="form-control" type="file" id="image" accept="image/*" required>
+            <div class="invalid-feedback">이미지 파일(jpg/png/webp 등)만 업로드 해주세요.</div>
           </div>
 
-          <!-- 3. 제목 -->
+          <!-- 4. 제목 -->
           <div class="mb-3">
-            <label for="title" class="form-label">글의 제목</label>
+            <label for="title" class="form-label">글의 제목 <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" required>
+            <div class="invalid-feedback">제목은 2자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 4. 내용 -->
+          <!-- 5. 내용 -->
           <div class="mb-3">
-            <label for="content" class="form-label">글의 내용</label>
-            <textarea class="form-control" id="content" rows="5" placeholder="내용을 입력하세요" style="resize: none;"
-              required></textarea>
+            <label for="content" class="form-label">글의 내용 <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="content" rows="5" placeholder="내용을 입력하세요" style="resize: none;" required></textarea>
+            <div class="invalid-feedback">내용은 10자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 5. 날짜 -->
+          <!-- 6. 날짜 -->
           <div class="mb-3">
-            <label for="date" class="form-label">작성 날짜</label>
+            <label for="date" class="form-label">작성 날짜 <span class="text-danger">*</span></label>
             <input type="date" class="form-control" id="date" required>
+            <div class="invalid-feedback">미래 날짜는 선택할 수 없습니다.</div>
           </div>
 
           <!-- 버튼 -->
           <div class="d-flex justify-content-between">
             <a href="index.html" class="btn btn-secondary">취소</a>
-            <button id="submitBtn" type="button" class="btn btn-primary">생성하기</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary">생성하기</button>
           </div>
         </form>
       </div>
@@ -84,18 +87,93 @@
     </div>
   </footer>
 
-</body>
-<script>
-  const submitBtn = document.getElementById("submitBtn");
-  function submit() {
-    if (confirm("게시물을 추가 할까요?")) {
-      alert("게시물이 생성 되었습니다.");
-      window.location.href = "index.html";
-    } else {
-      alert("취소 되었습니다.");
-    }
-  }
-  submitBtn.addEventListener("click",submit);
-</script>
+  <script>
+    const form = document.getElementById('createForm');
+    const authorName = document.getElementById('authorName');
+    const authorEmail = document.getElementById('authorEmail');
+    const imageInput = document.getElementById('image');
+    const titleInput = document.getElementById('title');
+    const contentInput = document.getElementById('content');
+    const dateInput = document.getElementById('date');
 
+    function setInvalid(input, message) {
+      input.classList.add('is-invalid');
+      const feedback = input.closest('.mb-3')?.querySelector('.invalid-feedback');
+      if (feedback) feedback.textContent = message;
+    }
+    function clearInvalid(input) {
+      input.classList.remove('is-invalid');
+    }
+    function isFutureDate(yyyyMMdd) {
+      if (!yyyyMMdd) return false;
+      const today = new Date(); today.setHours(0,0,0,0);
+      const d = new Date(yyyyMMdd);
+      return d > today;
+    }
+
+    function validate() {
+      let ok = true;
+
+      clearInvalid(authorName);
+      if (authorName.value.trim().length < 2) {
+        setInvalid(authorName, '이름은 2자 이상 입력해주세요.');
+        ok = false;
+      }
+
+      clearInvalid(authorEmail);
+      if (!authorEmail.checkValidity()) {
+        setInvalid(authorEmail, '올바른 이메일 형식을 입력해주세요.');
+        ok = false;
+      }
+
+      clearInvalid(imageInput);
+      if (!imageInput.files || !imageInput.files[0]) {
+        setInvalid(imageInput, '이미지 파일을 선택해주세요.');
+        ok = false;
+      } else if (!imageInput.files[0].type.startsWith('image/')) {
+        setInvalid(imageInput, '이미지 파일(jpg/png/webp 등)만 업로드 해주세요.');
+        ok = false;
+      }
+
+      clearInvalid(titleInput);
+      if (titleInput.value.trim().length < 2) {
+        setInvalid(titleInput, '제목은 2자 이상 입력해주세요.');
+        ok = false;
+      }
+
+      clearInvalid(contentInput);
+      if (contentInput.value.trim().length < 10) {
+        setInvalid(contentInput, '내용은 10자 이상 입력해주세요.');
+        ok = false;
+      }
+
+      clearInvalid(dateInput);
+      if (!dateInput.value || isFutureDate(dateInput.value)) {
+        setInvalid(dateInput, '미래 날짜는 선택할 수 없습니다.');
+        ok = false;
+      }
+
+      if (!form.checkValidity()) ok = false;
+      return ok;
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      form.classList.add('was-validated');
+
+      if (!validate()) {
+        const firstInvalid = form.querySelector('.is-invalid, :invalid');
+        if (firstInvalid) firstInvalid.focus({ preventScroll: false });
+        return;
+      }
+
+      if (confirm('게시물을 추가할까요?')) {
+        alert('게시물이 생성되었습니다.');
+        window.location.href = 'index.html';
+      } else {
+        alert('취소되었습니다.');
+      }
+    });
+  </script>
+</body>
 </html>
