@@ -28,8 +28,12 @@
         <a href="index.html" class="navbar-brand d-flex align-items-center">
           <strong>CRUD Album</strong>
         </a>
-        <a href="add.html" class="btn btn-primary my-2">추가하기</a>
-        <a href="js_dynamic.html" class="btn btn-primary my-2">동적페이지</a>
+        <div class="d-flex gap-2">
+          <a href="add.html" class="btn btn-primary">추가하기</a>
+          <a href="js_dynamic.html" class="btn btn-primary">동적페이지</a>
+        </div>
+
+
       </div>
     </div>
   </header>
@@ -64,8 +68,9 @@
                   <div class="btn-group">
                     <button type="button" onclick="location.href='view.html'"
                       class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" onclick="location.href='edit.html'" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    <button name="delet"  type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
+                    <button type="button" onclick="location.href='edit.html'"
+                      class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button name="delet" type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
                   </div>
                   <small class="text-body-secondary">2025-06-27</small>
                 </div>
@@ -85,8 +90,9 @@
                   <div class="btn-group">
                     <button type="button" onclick="location.href='view.html'"
                       class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" onclick="location.href='edit.html'" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    <button name="delet"  type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
+                    <button type="button" onclick="location.href='edit.html'"
+                      class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button name="delet" type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
                   </div>
                   <small class="text-body-secondary">2025-09-10</small>
                 </div>
@@ -105,7 +111,8 @@
                   <div class="btn-group">
                     <button type="button" onclick="location.href='view.html'"
                       class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" onclick="location.href='edit.html'" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" onclick="location.href='edit.html'"
+                      class="btn btn-sm btn-outline-secondary">Edit</button>
                     <button name="delet" type="button" class="btn btn-sm btn-outline-secondary">Delet</button>
                   </div>
                   <small class="text-body-secondary">2025-09-07</small>
@@ -131,7 +138,7 @@
 <script>
   const deletBtns = document.getElementsByName("delet");
 
-  function deletCard (){
+  function deletCard() {
     if (confirm("게시물을 삭제할까요?")) {
       alert("게시물이 삭제 되었습니다.");
       window.location.href = "index.html";
@@ -140,10 +147,10 @@
     }
   }
 
-  deletBtns.forEach(e=>{
-    e.addEventListener("click",deletCard);
+  deletBtns.forEach(e => {
+    e.addEventListener("click", deletCard);
   })
-  
+
 </script>
 
 </html>
