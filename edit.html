@@ -26,7 +26,7 @@
   <header data-bs-theme="dark">
     <div class="navbar navbar-dark bg-dark shadow-sm">
       <div class="container">
-        <a href="index.html" class="navbar-brand d-flex align-items-center">
+        <a href="./index.html" class="navbar-brand d-flex align-items-center">
           <strong>CRUD Album</strong>
         </a>
       </div>
@@ -41,30 +41,25 @@
 
         <!-- 📌 수정 폼 -->
         <form id="editForm" novalidate>
-          <!-- 0. 게시물 ID (읽기전용/숨김 선택) -->
           <input type="hidden" id="postId" />
 
-          <!-- 1. 작성자 이름 -->
           <div class="mb-3">
             <label for="authorName" class="form-label">작성자 이름 <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="authorName" placeholder="작성자 이름을 입력하세요" required />
             <div class="invalid-feedback">이름은 2자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 2. 작성자 Email -->
           <div class="mb-3">
             <label for="authorEmail" class="form-label">작성자 Email <span class="text-danger">*</span></label>
             <input type="email" class="form-control" id="authorEmail" placeholder="example@email.com" required />
             <div class="invalid-feedback">올바른 이메일 형식을 입력해주세요.</div>
           </div>
 
-          <!-- 3. 현재 이미지 미리보기 (파일 input은 보안상 값 채우기 불가) -->
           <div class="mb-3">
             <label class="form-label">현재 등록된 이미지</label>
             <img id="currentImage" class="img-preview d-none" alt="현재 이미지" />
           </div>
 
-          <!-- 4. 이미지 업로드 -->
           <div class="mb-3">
             <label for="image" class="form-label">이미지 변경</label>
             <input class="form-control" type="file" id="image" accept="image/*" />
@@ -72,14 +67,12 @@
             <div class="invalid-feedback">이미지 파일만 업로드 해주세요.(jpg/png/webp 등)</div>
           </div>
 
-          <!-- 5. 제목 -->
           <div class="mb-3">
             <label for="title" class="form-label">글의 제목 <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" required />
             <div class="invalid-feedback">제목은 2자 이상 입력해주세요.</div>
           </div>
 
-          <!-- 6. 내용 -->
           <div class="mb-3">
             <label for="content" class="form-label">글의 내용 <span class="text-danger">*</span></label>
             <textarea class="form-control" id="content" rows="5" placeholder="내용을 입력하세요" style="resize:none"
@@ -96,16 +89,14 @@
             <div class="invalid-feedback">올바른 URL 형식을 입력해주세요. (http:// 또는 https://)</div>
           </div>
 
-          <!-- 7. 날짜 -->
           <div class="mb-3">
             <label for="date" class="form-label">작성 날짜 <span class="text-danger">*</span></label>
             <input type="date" class="form-control" id="date" required />
             <div class="invalid-feedback">미래 날짜는 선택할 수 없습니다.</div>
           </div>
 
-          <!-- 버튼 -->
           <div class="d-flex justify-content-between">
-            <a href="index.html" class="btn btn-secondary">취소</a>
+            <a href="./index.html" class="btn btn-secondary">취소</a>
             <button id="submitBtn" type="submit" class="btn btn-primary">수정하기</button>
           </div>
         </form>
@@ -113,7 +104,6 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="text-body-secondary py-5">
     <div class="container">
       <p class="mb-0">© 2025 CRUD Album Example</p>
@@ -158,7 +148,6 @@
       }
     }
 
-    // ✅ Bootstrap 스타일과 함께 커스텀 유효성 검사
     function setInvalid(input, message) {
       input.classList.add("is-invalid");
       const feedback = input.closest(".mb-3").querySelector(".invalid-feedback");

@@ -20,28 +20,24 @@
   <header data-bs-theme="dark">
     <div class="navbar navbar-dark bg-dark shadow-sm">
       <div class="container">
-        <a href="index.html" class="navbar-brand d-flex align-items-center">
+        <a href="./index.html" class="navbar-brand d-flex align-items-center">
           <strong>CRUD Album</strong>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- 메인 컨텐츠 -->
   <main class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-10">
 
-        <!-- 카드 대신 심플한 2-column 레이아웃 -->
         <div class="row g-4 align-items-start">
 
-          <!-- 좌측 이미지 -->
           <div class="col-md-5">
             <img src="https://images.unsplash.com/photo-1542831371-d531d36971e6?q=80&w=1200&auto=format&fit=crop"
               class="img-fluid rounded shadow-sm" alt="게시물 이미지">
           </div>
 
-          <!-- 우측 텍스트 -->
           <div class="col-md-7">
             <h2 class="mb-3">OSS_3주차</h2>
 
@@ -65,14 +61,12 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="text-body-secondary py-5">
     <div class="container text-center">
       <p class="mb-0">© 2025 CRUD OSS ASSIGNMENT</p>
     </div>
   </footer>
 
-  <!-- JS: 삭제 confirm -->
   <script>
     document.getElementById("deleteBtn").addEventListener("click", function () {
       if (confirm("게시물을 삭제할까요?")) {
