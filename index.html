@@ -13,26 +13,25 @@
   <style>
     .card-img-top {
       height: 225px;
-      object-fit: cover;
-    }
+      object-fit: cover; 
+      /* 사진의 사이즈가 제멋대로 되지 않도록 맞추는것! */
+    } 
   </style>
 </head>
 
 <body>
 
   <!-- A. 헤더 -->
-  <header data-bs-theme="dark">
+  <header data-bs-theme="dark"> 
     <div class="navbar navbar-dark bg-dark shadow-sm">
       <div class="container">
         <a href="./index.html" class="navbar-brand d-flex align-items-center">
           <strong>CRUD Album</strong>
         </a>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2"> 
           <a href="./add.html" class="btn btn-primary">추가하기</a>
           <a href="./js_dynamic.html" class="btn btn-primary">동적페이지</a>
         </div>
-
-
       </div>
     </div>
   </header>
@@ -149,6 +148,8 @@
   deletBtns.forEach(e => {
     e.addEventListener("click", deletCard);
   })
+  // 여러개 항목을 각각 선택할때 마다 이벤트가 실행되도록 함!
+
 
 </script>
 

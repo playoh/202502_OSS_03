@@ -121,7 +121,7 @@
       content: "부트스트랩 템플릿을 활용하여 CRUD 앨범을 구현하고, edit 페이지에서 검증을 강화했습니다.",
       siteLink: "https://conscious-robin-3fc.notion.site/JS_DOM_ass03-2699bf90260a800199e3c7620792332b",
       date: "2025-09-10"
-    };
+    };  //초기값으로 미리 설정해 놓기 위한 더미데이터
 
     const form = document.getElementById("editForm");
     const postId = document.getElementById("postId");
@@ -146,17 +146,21 @@
         currentImage.src = rec.imageUrl;
         currentImage.classList.remove("d-none");
       }
-    }
+    } 
+    //전달받은 내용으로 입력칸 부분을 채워줌! 
+    //이미지URL이 있으면 미리보기  
 
     function setInvalid(input, message) {
       input.classList.add("is-invalid");
       const feedback = input.closest(".mb-3").querySelector(".invalid-feedback");
       if (feedback) feedback.textContent = message;
-    }
+    } 
+    //아래에서 지정한 input값과 메시지를 띄움! 이때에 다른 효과를 주기 위해서 class를 따로 지정함!
 
     function clearInvalid(input) {
       input.classList.remove("is-invalid");
     }
+    //유효성 검사를 실행하고, 
 
     function isFutureDate(yyyyMMdd) {
       if (!yyyyMMdd) return false;
@@ -165,38 +169,50 @@
       const d = new Date(yyyyMMdd);
       return d > today;
     }
+    //new Date()는 현재 날짜와 시간을 가지는 객체를 생성함!
+    //set Hour는 Date객체의 시간인 시,분,초,밀리초를 0으로 리셋함!
+    // 왜냐하면 날짜만 비교하려고!
+    //이렇게 리셋한 날짜와 현재 지정된 년도,달,일을 비교함! 
+    //d>todaym는 today보다 미래인지 검사
 
     function validate() {
-      let ok = true;
+      let ok = true; //검증을 모두 통과하면 true, 하나라도 실패시 false반환!!
 
       clearInvalid(authorName);
       if (authorName.value.trim().length < 2) {
         setInvalid(authorName, "이름은 2자 이상 입력해주세요.");
         ok = false;
       }
+      //길이가 2이하면 실패처리 + 메시지 표출
 
       clearInvalid(authorEmail);
       if (!authorEmail.checkValidity()) {
         setInvalid(authorEmail, "올바른 이메일 형식을 입력해주세요.");
         ok = false;
       }
+      //기본적으로 검증해 주는거 활용함
+
 
       clearInvalid(titleInput);
       if (titleInput.value.trim().length < 2) {
         setInvalid(titleInput, "제목은 2자 이상 입력해주세요.");
         ok = false;
       }
+      //최소 길이 2자
 
       clearInvalid(contentInput);
       if (contentInput.value.trim().length < 10) {
         setInvalid(contentInput, "내용은 10자 이상 입력해주세요.");
         ok = false;
       }
+      //내용은 10자 이상
+
       clearInvalid(siteLink);
       if (siteLink.value.trim() && !siteLink.checkValidity()) {
         setInvalid(siteLink, "올바른 URL 형식을 입력해주세요. (http:// 또는 https://)");
         ok = false;
       }
+      //값이 비어있으면 패스, 값이 있으면 type url의 기본 검증 실시
 
 
       clearInvalid(dateInput);
@@ -204,6 +220,7 @@
         setInvalid(dateInput, "미래 날짜는 선택할 수 없습니다.");
         ok = false;
       }
+      //위에 만들었던 미래 날짜인지 검증!
 
       clearInvalid(imageInput);
       if (imageInput.files && imageInput.files[0]) {
@@ -212,18 +229,20 @@
           setInvalid(imageInput, "이미지 파일만 업로드 해주세요.(jpg/png/webp 등)");
           ok = false;
         }
-      }
+      }//이미지 업로드는 선택사항, file.type이 image/로 시작하는지 확인함!
 
       if (!form.checkValidity()) ok = false;
       return ok;
+      //폼 전체에 기본 검증을 실시 시킴! 잡히면 ok를 false로 하고 제출을 막음
     }
 
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      //기본 동작을 차단함! 바로 form이 서버로 전송되고 페이지 새로고침하는 것을 방지 
 
       form.classList.add("was-validated");
-
+      //검증을 하고 알맞게 통과햇다면 체크 표시를 띄움!
 
       if (confirm("게시물을 수정할까요?")) {
         const payload = {
@@ -234,10 +253,15 @@
           content: contentInput.value.trim(),
           date: dateInput.value,
         };
+        //입력한 값들을 정리함 (이미지와 링크는 제외!필수가 아님)
 
         console.log("[DEBUG] 수정 payload", payload);
+        //수정 완료시에 로그로 입력한 값 재확인 가능!
+
         alert("게시물이 수정되었습니다.");
         window.location.href = "index.html";
+        //수정 되었다는 알림을 띄우고 메인 화면으로 이동
+
       } else {
         alert("수정이 취소되었습니다.");
       }
@@ -246,6 +270,8 @@
 
 
     hydrateForm(record);
+    //아까 만들었던 입력칸에 더미 데이터를 넣는걸 실행하는 부분
+
   </script>
 </body>
 

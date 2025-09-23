@@ -65,6 +65,7 @@
   const list = document.getElementById("list");
 
   function addItem() {
+    //입력받는 값을 item 배열로 지정
     const item = input.value
       .split(',')
       .filter(s => s.length > 0);
@@ -76,20 +77,25 @@
       return;
     }
 
+    //item이라는 배열에서 각 1개씩의 항목을 text라고 정의!
     for (const text of item) {
       const li = document.createElement('li');
       li.textContent = text;
       list.appendChild(li);
     }
+    //li을 생성하고, 그 li에다가 텍스트를 채워 넣음 근데 내용은 text!
+    //그리고 ul의 자식으로써 추가! 즉 list에다가 생성한 li을 채워넣음!
     input.value="";
+    //추가한 이후에는 작성했던 input 창 초기화
   }
 
-  function deletItem() {
+  function deletItem() { 
+        //가장 마지막 항목이 없다면 경고 띄움 (!의 뜻은 false == 0 임)
         if(!list.lastElementChild){
       alert("삭제할 목록이 없습니다.");
       return;
     }
-    if (list.lastElementChild) {
+    if (list.lastElementChild) { //있다면 지우기~~
       list.removeChild(list.lastElementChild);
     }
   }
